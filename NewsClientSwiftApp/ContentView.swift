@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct Article: Codable {
+    var title: String
+}
+
+struct ContentView:
     var body: some View {
         VStack {
             Image(systemName: "globe")
