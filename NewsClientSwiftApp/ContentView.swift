@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct News: Codable {
     let articles: [Article]
@@ -13,11 +14,24 @@ struct News: Codable {
 
 struct Article: Codable {
     let title: String
+    let author: String?
     let urlToImage: String
+    let publishedAt: String
 }
 
 struct ContentView: View {
     @State private var articles = [Article]()
+    
+    func dateString(publishedAt: String) -> String {
+        let formatter = DateFormatter()
+        // 端末設定によって書式が変わらない保証があるen_US_POSIXを指定
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        // APIから取得したString型の投稿日時をDate型に変換するためのフォーマット
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        guard let date = formatter.date(from: publishedAt) else { return "" }
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        return formatter.string(from: date)
+    }
 
     var body: some View {
         NavigationView {
@@ -32,8 +46,14 @@ struct ContentView: View {
                             ProgressView().frame(width: 64, height: 64)
                         }
                     }
-                    Spacer()
-                    Text(article.title).lineLimit(2)
+                    VStack{
+                        Text(article.title).lineLimit(2)
+                        HStack{
+                            Text(dateString(publishedAt: article.publishedAt))
+                            Text(article.author ?? "")
+                            Spacer()
+                        }.font(.subheadline).lineLimit(1)
+                    }
                 }
             }.navigationTitle("ニュース記事一覧")
         }.onAppear(perform: loadData)           // データ読み込み処理
