@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct News: Codable {
-    var articles: [Article]
+    let articles: [Article]
 }
 
 struct Article: Codable {
-    var title: String
+    let title: String
+    let urlToImage: String
 }
 
 struct ContentView: View {
@@ -20,9 +21,19 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            List(articles, id: \.title) { item in
-                VStack(alignment: .leading) {
-                    Text(item.title)
+            List(articles, id: \.title) { article in
+                HStack {
+                    AsyncImage(url: URL(string: article.urlToImage)) { phase in
+                        if let image = phase.image {
+                            image.resizable().scaledToFill().frame(width: 64, height: 64).clipped()
+                        } else if let error = phase.error {
+                            Text(error.localizedDescription).frame(width: 64, height: 64)
+                        } else {
+                            ProgressView().frame(width: 64, height: 64)
+                        }
+                    }
+                    Spacer()
+                    Text(article.title).lineLimit(2)
                 }
             }.navigationTitle("ニュース記事一覧")
         }.onAppear(perform: loadData)           // データ読み込み処理
