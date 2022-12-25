@@ -1,5 +1,5 @@
 //
-//  ModalView.swift
+//  WebView.swift
 //  NewsClientSwiftApp
 //
 //  Created by 小林陽 on 2022/12/25.
@@ -8,7 +8,7 @@
 import WebKit
 import SwiftUI
 
-struct ModalWebView: UIViewRepresentable {
+struct WebView: UIViewRepresentable {
     var url: String
 
     func makeUIView(context: Context) -> WKWebView {
@@ -21,8 +21,10 @@ struct ModalWebView: UIViewRepresentable {
     }
 }
 
-struct ModalWebView_Previews: PreviewProvider {
+struct WebView_Previews: PreviewProvider {
     static var previews: some View {
-        ModalWebView(url: "url")
+        VStack{
+            WebView(url: "url")
+        }
     }
 }
