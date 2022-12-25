@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ContentView: View {
+    @ObservedObject var newsService = NewsService()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            List(self.newsService.articles, id: \.title) { article in
+                ArticleRow(article: article)
+            }.navigationTitle("ニュース記事一覧")
         }
-        .padding()
     }
 }
 
