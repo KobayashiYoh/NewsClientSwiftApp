@@ -16,7 +16,7 @@ struct ContentView: View {
             List(self.newsService.articles, id: \.title) { article in
                 ArticleRow(article: article)
             }.navigationTitle("ニュース記事一覧")
-        }           // データ読み込み処理
+        }
     }
 }
 

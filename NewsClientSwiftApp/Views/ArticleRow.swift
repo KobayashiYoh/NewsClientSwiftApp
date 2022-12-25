@@ -14,7 +14,6 @@ struct ArticleRow: View {
         let formatter = DateFormatter()
         // 端末設定によって書式が変わらない保証があるen_US_POSIXを指定
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        // APIから取得したString型の投稿日時をDate型に変換するためのフォーマット
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         guard let date = formatter.date(from: publishedAt) else { return "" }
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
