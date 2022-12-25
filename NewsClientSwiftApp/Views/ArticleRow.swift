@@ -42,8 +42,8 @@ struct ArticleRow: View {
             }
         }.onTapGesture(count: 1, perform: {
             self.showingSheet.toggle()
-        }).sheet(isPresented: $showingSheet, onDismiss: {) {
-            ModalView(title: article.title)
+        }).sheet(isPresented: $showingSheet, onDismiss: {}) {
+            ModalWebView(url: article.url)
         }
     }
 }
