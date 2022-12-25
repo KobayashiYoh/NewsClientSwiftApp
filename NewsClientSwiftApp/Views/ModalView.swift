@@ -8,10 +8,19 @@
 import SwiftUI
 
 struct ModalView: View {
+    @Environment(\.presentationMode) var presentation
     var url: String
     var body: some View {
         VStack {
-            Text("プレビュー").padding().font(.headline)
+            HStack{
+                Spacer().frame(width: 64).padding()
+                Spacer()
+                Text("プレビュー").padding().font(.headline)
+                Spacer()
+                Button(action: {
+                    self.presentation.wrappedValue.dismiss()
+                }, label: {Text("閉じる")}).frame(width: 64).padding()
+            }
             WebView(url: url)
         }
     }
