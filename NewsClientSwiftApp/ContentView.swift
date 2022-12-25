@@ -8,17 +8,6 @@
 import SwiftUI
 import Foundation
 
-struct News: Codable {
-    let articles: [Article]
-}
-
-struct Article: Codable {
-    let title: String
-    let author: String?
-    let urlToImage: String
-    let publishedAt: String
-}
-
 struct ContentView: View {
     @State private var articles = [Article]()
     
