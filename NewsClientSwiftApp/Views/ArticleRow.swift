@@ -23,7 +23,7 @@ struct ArticleRow: View {
     
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: article.urlToImage ?? "")) { phase in
+            AsyncImage(url: URL(string: article.urlToImage)) { phase in
                 if let image = phase.image {
                     image.resizable().scaledToFill().frame(width: 64, height: 64).clipped()
                 } else if let error = phase.error {
