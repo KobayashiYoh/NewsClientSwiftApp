@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ArticleRow: View {
+    @State private var showingSheet = false
     let article: Article
 
     func dateString(publishedAt: String) -> String {
@@ -22,7 +23,7 @@ struct ArticleRow: View {
     
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: article.urlToImage)) { phase in
+            AsyncImage(url: URL(string: article.urlToImage ?? "")) { phase in
                 if let image = phase.image {
                     image.resizable().scaledToFill().frame(width: 64, height: 64).clipped()
                 } else if let error = phase.error {
@@ -39,7 +40,10 @@ struct ArticleRow: View {
                     Spacer()
                 }.font(.subheadline).lineLimit(1)
             }
+        }.onTapGesture(count: 1, perform: {
+            self.showingSheet.toggle()
+        }).sheet(isPresented: $showingSheet, onDismiss: {) {
+            ModalView(title: article.title)
         }
     }
 }
-
