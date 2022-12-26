@@ -22,7 +22,7 @@ struct ModalView: View {
                 Button(action: {
                     self.presentation.wrappedValue.dismiss()
                 }, label: {Text("閉じる")}).frame(width: 48).padding()
-            }
+            }.background(Color(red: 0.98, green: 0.98, blue: 0.98, opacity: 0.94))
             WebView(url: url)
         }
     }
