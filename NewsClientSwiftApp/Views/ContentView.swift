@@ -16,7 +16,11 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(self.newsService.articles, id: \.title) { article in
-                ArticleRow(article: article)
+                ArticleRow(article: article).onAppear() {
+                    if article.title == self.newsService.articles[self.newsService.articles.count - 5].title {
+                        print(self.newsService.articles[self.newsService.articles.count - 5].title)
+                    }
+                }
             }.navigationTitle("最新ニュース一覧")
         }.searchable(text: $keyword, placement: .navigationBarDrawer(displayMode: .always)).autocapitalization(.none).onSubmit(of: .search) {
             self.newsService.fetchNews(keyword: keyword, page: page)
