@@ -19,8 +19,11 @@ class NewsService: ObservableObject {
         return decodedResponse
     }
 
-    public func fetchNews() {
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=jp&apiKey=" + apiKey) else {
+    public func fetchNews(keyword: String, page: Int) {
+        let encodedKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        let pageSize = "30"
+        let urlString = keyword.isEmpty ? "https://newsapi.org/v2/top-headlines?country=jp&pageSize=\(pageSize)&apiKey=\(apiKey)" : "https://newsapi.org/v2/everything?sortBy=publishedAt&q=\(encodedKeyword)&pageSize=\(pageSize)&apiKey=\(apiKey)"
+        guard let url = URL(string: urlString) else {
             return
         }
         let request = URLRequest(url: url)
@@ -45,6 +48,6 @@ class NewsService: ObservableObject {
     }
     
     init() {
-        fetchNews()
+        fetchNews(keyword: "", page: 1)
     }
 }
