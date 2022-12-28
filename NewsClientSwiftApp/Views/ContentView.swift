@@ -18,7 +18,7 @@ struct ContentView: View {
             List(self.newsService.articles, id: \.title) { article in
                 ArticleRow(article: article)
             }.navigationTitle("最新ニュース一覧")
-        }.searchable(text: $keyword, placement: .navigationBarDrawer(displayMode: .always)).onSubmit(of: .search) {
+        }.searchable(text: $keyword, placement: .navigationBarDrawer(displayMode: .always)).autocapitalization(.none).onSubmit(of: .search) {
             self.newsService.fetchNews(keyword: keyword, page: page)
         }
     }
