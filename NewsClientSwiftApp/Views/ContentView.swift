@@ -10,15 +10,15 @@ import Foundation
 
 struct ContentView: View {
     @ObservedObject var newsService = NewsService()
-    @State private var searchText = ""
+    @State private var keyword = ""
 
     var body: some View {
         NavigationView {
             List(self.newsService.articles, id: \.title) { article in
                 ArticleRow(article: article)
-            }.navigationTitle("ニュース記事一覧")
-        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always)).onSubmit(of: .search) {
-            self.newsService.fetchNews(searchText: searchText)
+            }.navigationTitle("最新ニュース一覧")
+        }.searchable(text: $keyword, placement: .navigationBarDrawer(displayMode: .always)).onSubmit(of: .search) {
+            self.newsService.fetchNews(keyword: keyword)
         }
     }
 }
