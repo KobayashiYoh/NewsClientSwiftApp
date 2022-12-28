@@ -18,7 +18,7 @@ struct ContentView: View {
                 ArticleRow(article: article)
             }.navigationTitle("ニュース記事一覧")
         }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always)).onSubmit(of: .search) {
-            self.newsService.fetchNews()
+            self.newsService.fetchNews(searchText: searchText)
         }
     }
 }
