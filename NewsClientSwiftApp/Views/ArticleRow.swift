@@ -26,8 +26,8 @@ struct ArticleRow: View {
             AsyncImage(url: URL(string: article.urlToImage ?? "")) { phase in
                 if let image = phase.image {
                     image.resizable().scaledToFill().frame(width: 64, height: 64).clipped()
-                } else if let error = phase.error {
-                    Text(error.localizedDescription).frame(width: 64, height: 64)
+                } else if phase.error != nil {
+                    Text("No Image").frame(width: 64, height: 64).background(Color.gray).foregroundColor(Color.white)
                 } else {
                     ProgressView().frame(width: 64, height: 64)
                 }
