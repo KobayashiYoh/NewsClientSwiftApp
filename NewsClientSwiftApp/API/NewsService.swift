@@ -22,7 +22,7 @@ class NewsService: ObservableObject {
     public func fetchNews(keyword: String, page: Int) {
         let encodedKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         let pageSize = "30"
-        let urlString = keyword.isEmpty ? "https://newsapi.org/v2/top-headlines?country=jp&pageSize=\(pageSize)&apiKey=\(apiKey)" : "https://newsapi.org/v2/everything?sortBy=publishedAt&q=\(encodedKeyword)&pageSize=\(pageSize)&apiKey=\(apiKey)"
+        let urlString = keyword.isEmpty ? "https://newsapi.org/v2/top-headlines?country=jp&pageSize=\(pageSize)&apiKey=\(apiKey)" : "https://newsapi.org/v2/everything?sortBy=publishedAt&q=\(encodedKeyword)&pageSize=\(pageSize)&page=\(page)&apiKey=\(apiKey)"
         guard let url = URL(string: urlString) else {
             return
         }
@@ -37,7 +37,11 @@ class NewsService: ObservableObject {
                 if let data = data {
                     let news: News = self.decodeJSONToNews(data: data)
                     DispatchQueue.main.async {
-                        self.articles = news.articles
+                        if page == 1 {
+                            self.articles = news.articles
+                        } else {
+                            self.articles += news.articles
+                        }
                     }
                 }
             } else {
